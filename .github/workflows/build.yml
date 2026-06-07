@@ -1,0 +1,60 @@
+name: WETYR Films iOS (local build, free)
+
+# Runs `eas build --local` on GitHub's free macOS runner (free for public repos),
+# which produces an IPA WITHOUT consuming EAS cloud build credits, then submits it
+# to TestFlight.
+#
+# Required repository secrets:
+#   EXPO_TOKEN        Expo access token (expo.dev -> Account -> Access tokens)
+#   ASC_KEY_BASE64    AuthKey_YRMDQTX998.p8, base64-encoded
+#   ASC_KEY_ID        YRMDQTX998
+#   ASC_ISSUER_ID     b7b9dd56-d867-4b33-b6e0-21e133f8bf12
+#   APPLE_TEAM_ID     D79MM73Q3C
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths: ['.github/workflows/build.yml']
+
+jobs:
+  build:
+    runs-on: macos-14
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      EXPO_ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      EXPO_ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Write App Store Connect API key
+        run: |
+          mkdir -p asc
+          echo "$ASC_KEY_BASE64" | base64 --decode > asc/AuthKey.p8
+        env:
+          ASC_KEY_BASE64: ${{ secrets.ASC_KEY_BASE64 }}
+
+      - name: Build IPA locally (no EAS cloud credits)
+        run: |
+          export EXPO_ASC_API_KEY_PATH="$PWD/asc/AuthKey.p8"
+          npx eas-cli@latest build --platform ios --profile production --local --non-interactive --output "$PWD/wetyr-films.ipa"
+
+      - name: Submit to TestFlight
+        run: npx eas-cli@latest submit --platform ios --profile production --path "$PWD/wetyr-films.ipa" --non-interactive
+
+      - name: Upload IPA artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wetyr-films-ipa
+          path: wetyr-films.ipa
+          if-no-files-found: ignore
