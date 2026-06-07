@@ -9,3 +9,5 @@ android/
 # Apple key, never commit
 *.p8
 asc/
+_ipa/
+asc/
