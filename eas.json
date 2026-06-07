@@ -1,0 +1,34 @@
+{
+  "cli": {
+    "version": ">= 13.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": { "simulator": false }
+    },
+    "preview": {
+      "distribution": "internal",
+      "ios": { "simulator": false }
+    },
+    "production": {
+      "autoIncrement": true,
+      "ios": { "image": "latest" }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "ascApiKeyPath": "C:/Users/13219/Downloads/AuthKey_YRMDQTX998.p8",
+        "ascApiKeyId": "YRMDQTX998",
+        "ascApiKeyIssuerId": "b7b9dd56-d867-4b33-b6e0-21e133f8bf12",
+        "appleTeamId": "D79MM73Q3C",
+        "companyName": "WETYR Corporation",
+        "language": "en-US",
+        "sku": "wetyr-films-001"
+      }
+    }
+  }
+}
