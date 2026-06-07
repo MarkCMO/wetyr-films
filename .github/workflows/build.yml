@@ -21,7 +21,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: macos-26
     env:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
       EXPO_ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
