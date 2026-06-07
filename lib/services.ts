@@ -8,8 +8,11 @@ export const getFilmIntel = () => apiGet<FilmIntel>('/.netlify/functions/film-in
 export const getNews = () => apiGet<NewsResponse>('/.netlify/functions/news-feed');
 export const getCasting = () => apiGet<CastingResponse>('/.netlify/functions/casting-calls');
 
-// Rolodex
-const RX = '/.netlify/functions/film-rolodex';
+// Rolodex.
+// Use the direct Cloudflare route (/film-rolodex), not /.netlify/functions/film-rolodex:
+// the latter goes through the root catch-all worker which serves a stale bundle.
+// The direct per-route function runs current code.
+const RX = '/film-rolodex';
 
 export function getRolodex(opts: {
   q?: string; type?: string; tag?: string; dept?: string; limit?: number; offset?: number;
@@ -46,6 +49,6 @@ export const findNewestEmail = (personId: string) =>
   apiPost<any>(RX, { action: 'find-newest-email', personId });
 
 // Bulk tools (trigger existing server crons / batch jobs)
-export const syncNow = () => apiPost<any>('/.netlify/functions/film-rolodex-cron', {});
-export const deepCrawl = () => apiPost<any>('/.netlify/functions/film-rolodex-deep-cron', {});
+export const syncNow = () => apiPost<any>('/api/film-rolodex-cron', {});
+export const deepCrawl = () => apiPost<any>('/api/film-rolodex-deep-cron', {});
 export const freshenBatch = () => apiPost<any>(RX, { action: 'freshen-batch' });
