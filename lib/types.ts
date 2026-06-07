@@ -24,6 +24,10 @@ export interface VideoClip { key: string; name?: string; site?: string; type?: s
 
 export interface TitleDetail {
   id: number;
+  mediaType?: 'movie' | 'tv';
+  seasons?: number;
+  episodes?: number;
+  networks?: string[];
   title: string;
   tagline?: string;
   overview?: string;
@@ -138,4 +142,46 @@ export interface RolodexList {
   paging?: { companiesHasMore?: boolean; peopleHasMore?: boolean };
   total?: { companies?: number; people?: number; filteredCompanies?: number; filteredPeople?: number };
   facets?: Facets;
+}
+
+// ── Search (film-search Cloudflare function) ──────────────────────────────
+
+export interface SearchResult {
+  id: number;
+  mediaType: 'movie' | 'tv' | 'person';
+  title: string;
+  date?: string;
+  poster?: string;
+  voteAverage?: number;
+  voteCount?: number;
+  overview?: string;
+  popularity?: number;
+  department?: string;     // person
+  knownForText?: string;   // person
+}
+
+export interface SearchResponse { ok?: boolean; query?: string; results?: SearchResult[] }
+export interface DetailResponse { ok?: boolean; detail?: TitleDetail | PersonDetail }
+export interface UpcomingResponse { ok?: boolean; upcoming?: TrendingTitle[] }
+
+export interface PersonCredit {
+  id: number;
+  mediaType?: string;
+  title: string;
+  character?: string;
+  date?: string;
+  poster?: string;
+}
+
+export interface PersonDetail {
+  id: number;
+  person: true;
+  name: string;
+  department?: string;
+  biography?: string;
+  birthday?: string;
+  placeOfBirth?: string;
+  imdbId?: string;
+  profile?: string;
+  knownFor?: PersonCredit[];
 }

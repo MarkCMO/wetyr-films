@@ -24,7 +24,7 @@ export default function TabsLayout() {
       <Tabs.Screen name="boxoffice" options={{ title: 'Box Office', tabBarIcon: ({ color }) => <Icon glyph="📊" color={color} /> }} />
       <Tabs.Screen name="briefing" options={{ title: 'Briefing', tabBarIcon: ({ color }) => <Icon glyph="📰" color={color} /> }} />
       <Tabs.Screen name="casting" options={{ title: 'Casting', tabBarIcon: ({ color }) => <Icon glyph="📣" color={color} /> }} />
-      <Tabs.Screen name="rolodex" options={{ title: 'Rolodex', tabBarIcon: ({ color }) => <Icon glyph="📇" color={color} /> }} />
+      <Tabs.Screen name="search" options={{ title: 'Search', tabBarIcon: ({ color }) => <Icon glyph="🔎" color={color} /> }} />
     </Tabs>
   );
 }

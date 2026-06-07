@@ -5,19 +5,13 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import { colors } from '@/constants/theme';
-import { useAuth } from '@/lib/auth';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
 
 export default function RootLayout() {
-  const verify = useAuth((s) => s.verify);
-
   useEffect(() => {
-    (async () => {
-      await verify();
-      SplashScreen.hideAsync().catch(() => {});
-    })();
-  }, [verify]);
+    SplashScreen.hideAsync().catch(() => {});
+  }, []);
 
   return (
     <SafeAreaProvider>
@@ -33,8 +27,7 @@ export default function RootLayout() {
           }}
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="contact/[id]" options={{ title: 'Contact' }} />
-          <Stack.Screen name="contact/edit" options={{ title: 'Edit', presentation: 'modal' }} />
+          <Stack.Screen name="title/[id]" options={{ title: 'Title' }} />
         </Stack>
       </GestureHandlerRootView>
     </SafeAreaProvider>
