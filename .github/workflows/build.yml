@@ -1,11 +1,11 @@
-# Build run 3 (rolodex direct route).
+# Build run 4 (Search tab + TMDB restored).
 name: WETYR Films iOS (local build, free)
 
 # Runs `eas build --local` on GitHub's free macOS runner (free for public repos),
 # which produces an IPA WITHOUT consuming EAS cloud build credits, then submits it
 # to TestFlight.
 #
-# Build run 3 (rolodex direct route).
+# Build run 4 (Search tab + TMDB restored).
 # Required repository secrets:
 #   EXPO_TOKEN        Expo access token (expo.dev -> Account -> Access tokens)
 #   ASC_KEY_BASE64    AuthKey_YRMDQTX998.p8, base64-encoded
